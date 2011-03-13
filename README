@@ -1,10 +1,24 @@
 # gq
 
-Clojure implementation of Generalized Quantifiers for English.
+Clojure implementation of Generalized Quantifiers for English as a simple demonstration of functions that construct functions.
+
+The concept of generalized quantifiers was introduced in:
+Jon Barwise and Robin Cooper. 1981. Generalized quantifiers and natural language. Linguistics and Philosophy 4:159-219.
+
+For a brief overview of the mathematical and logical analysis that underlies my implementation for this project, see:
+Edward L. Keenan. 2006. "Quantifiers: Semantics". Encyclopedia of Language and Linguistics, vol. 10, pp. 302-308.
+http://www.linguistics.ucla.edu/people/keenan/papers/quantifiers%20semantics.pdf
+
+A discussion of the same theory with a Haskell implementation is available in chapter 7 of:
+Jan van Eijck and Christina Unger. 2010. Computational semantics with functional programming. Cambridge University Press.
+
+More than 20 years ago, I did an implementation using Prolog demonstrating many generalized quantifiers, higher-order quantifiers like reciprocals, and scope assignments as a practical demonstration of the theory presented in my dissertation:
+James J. Tyhurst. 1990. "Logical Forms for English Sentences". Ph.D. dissertation at the University of California, Los Angeles.
+Unfortunately, that source code is no longer available.
 
 ## Usage
 
-(m logical-form) ;; applies the interpretation function m to logical-form
+(m logical-form) ;; applies the interpretation function m to derive the denotation of logical-form
 
 ## License
 

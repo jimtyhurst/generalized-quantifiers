@@ -8,7 +8,7 @@
 
 ;; The universe of discourse, is organized alphabetically by distinguishing properties.
 ;; This is purely for convenience of maintaining the set of entities
-;; as the model changes over time. The labels and ordering has
+;; as the model changes over time. The labels and ordering have
 ;; absolutely no significance to the model.
 (def universe
   #{;; people
@@ -18,9 +18,41 @@
     ;; books
     :joy-of-clojure :practical-clojure :stumbling-on-happiness})
 
+(defn m-gq [quantifier-predicate]
+  "Returns a function as the interpretation of a generalized quantifier."
+  (fn [quantified-property]
+    (fn [argument]
+      (cond (set? argument) ;; arg is Verb Phrase denotation
+            ;; Apply quantifier to two properties.
+            (quantifier-predicate quantified-property argument)
+            (map? argument) ;; arg is Transitive Verb denotation
+            ;; Reduce verb denotation to just those first arguments
+            ;; in relation with second arguments that satisfy the quantifier.
+            (reduce
+             (fn [reduced-set map-element]
+               (if (quantifier-predicate quantified-property (second map-element))
+                 ;; subset of relation satisfies the predicate
+                 (union (hash-set (first map-element)) reduced-set)
+                 ;; else map-element is not one of the satisfiers
+                 reduced-set))
+             (set '()) ;; reduced-set accumulator
+             argument)))))
+
 (defn m-individual [entity]
   "Maps element of the universe of discourse to a generalized quantifier."
-  (fn [q] (if (subset? #{entity} q) true false)))
+  (fn [argument]
+    (let [quantifier-predicate (fn [q] (subset? #{entity} q))]
+      (cond (set? argument) ;; arg is Verb Phrase denotation
+            (quantifier-predicate argument)
+            (map? argument) ;; arg is Transitive Verb denotation
+            (reduce
+             (fn [reduced-set map-element]
+               (if (quantifier-predicate (second map-element))
+                 (union (hash-set (first map-element)) reduced-set)
+                 reduced-set)
+               )
+             (set '()) ;; reduced-set accumulator
+             argument)))))
 
 (def lexicon
   {;; Adjective
@@ -50,13 +82,16 @@
    "Yolanda" (m-individual :yolanda)
    "Zoe" (m-individual :zoe)
    ;; Intransitive Verb
-   "barked" #{:ginger :lucky :rocky :sasha}
-   "laughed" #{:brad :edward :veronica :yolanda}
-   "studied" #{:alan :brad :david :zoe}
+   "bark" #{:ginger :lucky :rocky :sasha}
+   "laugh" #{:brad :edward :veronica :yolanda}
+   "study" #{:alan :brad :david :zoe}
+   ;; Transitive Verb
+   "bite" {:ginger #{:alan :brad}}
+   "kiss" {:alan #{:veronica :zoe}, :veronica #{:alan}, :zoe #{:rocky}}
    ;; Quantifier
-   "every" (fn [p q] (if (subset? p q) true false))
-   "most" (fn [p q] (if (> (count (intersection p q)) (count (difference q p))) true false))
-   "some" (fn [p q] (if (not (empty? (intersection p q))) true false))
+   "every" (m-gq (fn [p q] (if (subset? p q) true false)))
+   "most" (m-gq (fn [p q] (if (> (count (intersection p q)) (count (difference q p))) true false)))
+   "some" (m-gq (fn [p q] (if (not (empty? (intersection p q))) true false)))
    })
 
 (defn lexical-item?
