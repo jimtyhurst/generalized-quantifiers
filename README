@@ -1,6 +1,6 @@
 # gq
 
-Clojure implementation of Generalized Quantifiers for English as a simple demonstration of functions that construct functions.
+Clojure implementation of Generalized Quantifiers for English as a simple demonstration of functions that construct functions. This is a compositional model theory semantics where the denotation of a quantifier is a function that maps the denotation of a noun to a function that maps the denotation of a verb phrase to a truth value. Object noun phrases are functions that map a transitive verb to a verb phrase.
 
 The concept of generalized quantifiers was introduced in:
 Jon Barwise and Robin Cooper. 1981. Generalized quantifiers and natural language. Linguistics and Philosophy 4:159-219.
@@ -19,6 +19,8 @@ Unfortunately, that source code is no longer available.
 ## Usage
 
 (m logical-form) ;; applies the interpretation function m to derive the denotation of logical-form
+
+See test/gq/test/core.clj for the interpretation of some sample sentences and sentence fragments with respect to the model in model.clj.
 
 ## License
 
