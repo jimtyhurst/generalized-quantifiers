@@ -25,3 +25,7 @@
   (is ((m "Zoe") (m "studied")))
   (is (false? ((m "Zoe") (m "barked"))))
   (is (false? ((m "Ginger") (m "studied")))))
+
+(deftest test-unknown-type
+  (is (= (m {:unknown-phrase-type nil}) "Unknown type")))
+
