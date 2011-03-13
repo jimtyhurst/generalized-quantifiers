@@ -19,3 +19,9 @@
   (is (false? ((m "most") (m "student") (m "laughed"))))
   (is (false? ((m "most") (m "developer") (m "barked"))))
   )
+
+(deftest test-proper-noun
+  (is ((m "Ginger") (m "barked")))
+  (is ((m "Zoe") (m "studied")))
+  (is (false? ((m "Zoe") (m "barked"))))
+  (is (false? ((m "Ginger") (m "studied")))))
