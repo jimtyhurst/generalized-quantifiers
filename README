@@ -1,0 +1,13 @@
+# gq
+
+Clojure implementation of Generalized Quantifiers for English.
+
+## Usage
+
+(m logical-form) ;; applies the interpretation function m to logical-form
+
+## License
+
+Copyright (C) 2010 Jim Tyhurst
+
+Distributed under the Eclipse Public License, the same as Clojure.
