@@ -4,11 +4,19 @@
 ;; Model includes the:
 ;;   * universe of discourse.
 ;;   * mapping of lexical items to their interpretation
-;;     with respect to the universe of discourse.
+;;     with respect to that universe of discourse.
 
-(def universe #{:alan :brad :carl :david :edward :veronica :willa :xena :yolanda :zoe
-                :lucky :rocky :ginger :sasha
-                :joy-of-clojure :practical-clojure :stumbling-on-happiness})
+;; The universe of discourse, is organized alphabetically by distinguishing properties.
+;; This is purely for convenience of maintaining the set of entities
+;; as the model changes over time. The labels and ordering has
+;; absolutely no significance to the model.
+(def universe
+  #{;; people
+    :alan :brad :carl :david :edward :veronica :willa :xena :yolanda :zoe
+    ;; dogs
+    :lucky :rocky :ginger :sasha
+    ;; books
+    :joy-of-clojure :practical-clojure :stumbling-on-happiness})
 
 (defn m-individual [entity]
   "Maps element of the universe of discourse to a generalized quantifier."
