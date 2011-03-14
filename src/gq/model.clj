@@ -96,7 +96,7 @@
    ;; Transitive Verb
    "bite" {:ginger #{:alan :brad}}
    "kiss" {:alan #{:veronica :zoe}, :brad #{:veronica}, :veronica #{:alan :brad}, :zoe #{:rocky}}
-   "read" {:alan #{:joy-of-clojure :practical-clojure}, :brad #{:joy-of-clojure}, :veronica #{:stumbling-on-happiness}, :yolanda #{:practical-clojure}, :zoe #{:stumbling-on-happiness}}
+   "read" {:alan #{:joy-of-clojure :practical-clojure :stumbling-on-happiness}, :brad #{:joy-of-clojure}, :veronica #{:stumbling-on-happiness}, :yolanda #{:practical-clojure}, :zoe #{:stumbling-on-happiness}}
    ;; Quantifier (simple)
    "a" (m-gq (fn [p q] (not (empty? (intersection p q))))) ;; "some"
    "every" (m-gq (fn [p q] (subset? p q)))
@@ -105,9 +105,10 @@
    "some" (m-gq (fn [p q] (not (empty? (intersection p q)))))
    ;; Quantifier (negative polarity)
    "any" (m-gq (fn [p q] (not (empty? (intersection p q))))) ;; "some"
-   ;; Quantifier (complex)
+   ;; Quantifier (numerical)
    "at least" (fn [n] (m-gq (fn [p q] (>= (count (intersection p q)) n))))
    "at most" (fn [n] (m-gq (fn [p q] (<= (count (intersection p q)) n))))
+   "exactly" (fn [n] (m-gq (fn [p q] (== (count (intersection p q)) n))))
    "less than" (fn [n] (m-gq (fn [p q] (< (count (intersection p q)) n))))
    "more than" (fn [n] (m-gq (fn [p q] (> (count (intersection p q)) n))))
    })
