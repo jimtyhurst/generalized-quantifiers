@@ -54,14 +54,18 @@
              (set '()) ;; reduced-set accumulator
              argument)))))
 
+(defn m-adjective [p]
+  "Maps a subset of the universe of discourse to a function that maps a subset to a subset, because functionally an adjective maps a noun to a noun."
+  (fn [q] (intersection p q)))
+
 ;; Lexical item is the key. Denotation is the value.
 ;; Words are listed alphabetically by syntactic category
 ;; and entities are listed alphabetically in sets
 ;; for ease of maintenance.
 (def lexicon
   {;; Adjective
-   "female" #{:veronica :willa :xena :yolanda :zoe :ginger :sasha}
-   "male" #{:alan :brad :carl :david :edward :lucky :rocky}
+   "female" (m-adjective #{:veronica :willa :xena :yolanda :zoe :ginger :sasha})
+   "male" (m-adjective #{:alan :brad :carl :david :edward :lucky :rocky})
    ;; Noun
    "book" #{:joy-of-clojure :practical-clojure :stumbling-on-happiness}
    "developer" #{:carl :david :willa :xena}

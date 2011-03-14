@@ -93,3 +93,11 @@
   (is (false? (((m "some") (m "dog")) ((m "Zoe") (m "bite")))))
   ;; Ginger bit Zoe.
   (is (false? ((m "Ginger") ((m "Zoe") (m "bite"))))))
+
+(deftest test-adjective
+  ;; Ginger bit a male student.
+  (is ((m "Ginger") (((m "a") ((m "male") (m "student"))) (m "bite"))))
+  ;; No female dog bit any female students.
+  (is (((m "no") ((m "female") (m "dog"))) (((m "any") ((m "female") (m "student"))) (m "bite"))))
+  ;; Ginger bit a female student.
+  (is (false? ((m "Ginger") (((m "a") ((m "female") (m "student"))) (m "bite"))))))
