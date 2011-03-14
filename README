@@ -1,8 +1,12 @@
 # gq
 
-Clojure implementation of Generalized Quantifiers for English as a simple demonstration of functions that construct functions. This is a compositional model theory semantics where the denotation of a quantifier is a function that maps the denotation of a noun to a function that maps the denotation of a verb phrase to a truth value. Object noun phrases are functions that map a transitive verb to a verb phrase.
+Clojure implementation of Generalized Quantifiers for English as a simple demonstration of functions that construct functions. I am just using this as an exercise while learning Clojure.
 
-The concept of generalized quantifiers was introduced in:
+This is a compositional model theory semantics where the denotation of a quantifier is a function that maps the denotation of a noun to a function that maps the denotation of a verb phrase to a truth value. Object noun phrases are functions that map a transitive verb to a verb phrase. Adjectives are functions that map nouns to nouns.
+
+So far, this project does *not* provide a mapping from surface structure to logical form. It just assumes a logical form that is built up compositionally from a hierarchical parse structure. For example, an object noun phrase is interpreted as a function on its sister transitive verb.
+
+Interesting linguistic characteristics of generalized quantifiers were originally discussed in:
 Jon Barwise and Robin Cooper. 1981. Generalized quantifiers and natural language. Linguistics and Philosophy 4:159-219.
 
 For a brief overview of the mathematical and logical analysis that underlies my implementation for this project, see:
@@ -12,7 +16,7 @@ http://www.linguistics.ucla.edu/people/keenan/papers/quantifiers%20semantics.pdf
 A discussion of the same theory with a Haskell implementation is available in chapter 7 of:
 Jan van Eijck and Christina Unger. 2010. Computational semantics with functional programming. Cambridge University Press.
 
-More than 20 years ago, I did an implementation using Prolog demonstrating many generalized quantifiers, higher-order quantifiers like reciprocals, and scope assignments as a practical demonstration of the theory presented in my dissertation:
+A long time ago, I did an implementation using Prolog demonstrating Boolean combinations of generalized quantifiers, higher-order quantifiers like reciprocals, and scope assignments as a practical demonstration of the theory presented in my dissertation:
 James J. Tyhurst. 1990. "Logical Forms for English Sentences". Ph.D. dissertation at the University of California, Los Angeles.
 Unfortunately, that source code is no longer available.
 
@@ -20,7 +24,22 @@ Unfortunately, that source code is no longer available.
 
 (m logical-form) ;; applies the interpretation function m to derive the denotation of logical-form
 
-See test/gq/test/core.clj for the interpretation of some sample sentences and sentence fragments with respect to the model in model.clj.
+See test/gq/test/core.clj for the interpretation of some sample sentences and sentence fragments with respect to the model in model.clj. Phrase and sentence meanings are built up compositionally from lexical items. For example:
+
+;; Ginger bit Alan.
+((m "Ginger") ((m "Alan") (m "bite"))))
+
+;; Some dog bit Alan.
+(((m "some") (m "dog")) ((m "Alan") (m "bite")))
+
+;; Ginger bit a male student.
+((m "Ginger") (((m "a") ((m "male") (m "student"))) (m "bite")))
+
+;; No female dog bit any female students.
+(((m "no") ((m "female") (m "dog"))) (((m "any") ((m "female") (m "student"))) (m "bite")))
+
+;; At least 2 men kissed Veronica.
+((((m "at least") (m 2)) (m "man")) ((m "Veronica") (m "kiss"))))
 
 ## License
 
