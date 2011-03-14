@@ -28,8 +28,25 @@
   ;; Most students laughed.
   (is (false? (((m "most") (m "student")) (m "laugh"))))
   ;; Most developers barked.
-  (is (false? (((m "most") (m "developer")) (m "bark"))))
-  )
+  (is (false? (((m "most") (m "developer")) (m "bark")))))
+
+(deftest test-less-than
+  ;; Less than 5 dogs barked.
+  (is ((((m "less than") (m 5)) (m "dog")) (m "bark")))
+  ;; Less than 5 students studied.
+  (is ((((m "less than") (m 5)) (m "student")) (m "study")))
+  ;; Less than 5 people studied.
+  (is (false? ((((m "less than") (m 5)) (m "person")) (m "study"))))
+  ;; Less than 3 dogs barked.
+  (is (false? ((((m "less than") (m 3)) (m "dog")) (m "bark")))))
+
+(deftest test-more-than
+  ;; Alan kissed more than 1 woman.
+  (is ((m "Alan") ((((m "more than") (m 1)) (m "woman")) (m "kiss"))))
+  ;; More than 1 man kissed Veronica.
+  (is ((((m "more than") (m 1)) (m "man")) ((m "Veronica") (m "kiss"))))
+  ;; At least 2 men kissed Veronica.
+  (is ((((m "at least") (m 2)) (m "man")) ((m "Veronica") (m "kiss")))))
 
 (deftest test-proper-noun
   ;; Ginger barked.
@@ -40,6 +57,9 @@
   (is (false? ((m "Zoe") (m "bark"))))
   ;; Ginger studied.
   (is (false? ((m "Ginger") (m "study")))))
+
+(deftest test-number
+  (is (== (m 42) 42)))
 
 (deftest test-unknown-type
   (is (= (m {:unknown-phrase-type nil}) "Unknown type")))

@@ -84,14 +84,20 @@
    ;; Intransitive Verb
    "bark" #{:ginger :lucky :rocky :sasha}
    "laugh" #{:brad :edward :veronica :yolanda}
-   "study" #{:alan :brad :david :zoe}
+   "study" #{:alan :brad :david :xena :zoe}
    ;; Transitive Verb
    "bite" {:ginger #{:alan :brad}}
-   "kiss" {:alan #{:veronica :zoe}, :veronica #{:alan}, :zoe #{:rocky}}
-   ;; Quantifier
-   "every" (m-gq (fn [p q] (if (subset? p q) true false)))
-   "most" (m-gq (fn [p q] (if (> (count (intersection p q)) (count (difference q p))) true false)))
-   "some" (m-gq (fn [p q] (if (not (empty? (intersection p q))) true false)))
+   "kiss" {:alan #{:veronica :zoe}, :brad #{:veronica}, :veronica #{:alan :brad}, :zoe #{:rocky}}
+   ;; Quantifier (simple)
+   "every" (m-gq (fn [p q] (subset? p q)))
+   "most" (m-gq (fn [p q] (> (count (intersection p q)) (count (difference q p)))))
+   "no" (m-gq (fn [p q] (empty? (intersection p q))))
+   "some" (m-gq (fn [p q] (not (empty? (intersection p q)))))
+   ;; Quantifier (complex)
+   "at least" (fn [n] (m-gq (fn [p q] (>= (count (intersection p q)) n))))
+   "at most" (fn [n] (m-gq (fn [p q] (<= (count (intersection p q)) n))))
+   "less than" (fn [n] (m-gq (fn [p q] (< (count (intersection p q)) n))))
+   "more than" (fn [n] (m-gq (fn [p q] (> (count (intersection p q)) n))))
    })
 
 (defn lexical-item?

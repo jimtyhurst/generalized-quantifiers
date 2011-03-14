@@ -15,5 +15,6 @@
   "Returns the interpretation of expression."
   [expression]
   (cond (lexical-item? expression) (m-lexical-item expression)
+        (number? expression) expression
         :else "Unknown type"))
 
