@@ -54,6 +54,10 @@
              (set '()) ;; reduced-set accumulator
              argument)))))
 
+;; Lexical item is the key. Denotation is the value.
+;; Words are listed alphabetically by syntactic category
+;; and entities are listed alphabetically in sets
+;; for ease of maintenance.
 (def lexicon
   {;; Adjective
    "female" #{:veronica :willa :xena :yolanda :zoe :ginger :sasha}
@@ -88,11 +92,15 @@
    ;; Transitive Verb
    "bite" {:ginger #{:alan :brad}}
    "kiss" {:alan #{:veronica :zoe}, :brad #{:veronica}, :veronica #{:alan :brad}, :zoe #{:rocky}}
+   "read" {:alan #{:joy-of-clojure :practical-clojure}, :brad #{:joy-of-clojure}, :veronica #{:stumbling-on-happiness}, :yolanda #{:practical-clojure}, :zoe #{:stumbling-on-happiness}}
    ;; Quantifier (simple)
+   "a" (m-gq (fn [p q] (not (empty? (intersection p q))))) ;; "some"
    "every" (m-gq (fn [p q] (subset? p q)))
    "most" (m-gq (fn [p q] (> (count (intersection p q)) (count (difference q p)))))
    "no" (m-gq (fn [p q] (empty? (intersection p q))))
    "some" (m-gq (fn [p q] (not (empty? (intersection p q)))))
+   ;; Quantifier (negative polarity)
+   "any" (m-gq (fn [p q] (not (empty? (intersection p q))))) ;; "some"
    ;; Quantifier (complex)
    "at least" (fn [n] (m-gq (fn [p q] (>= (count (intersection p q)) n))))
    "at most" (fn [n] (m-gq (fn [p q] (<= (count (intersection p q)) n))))

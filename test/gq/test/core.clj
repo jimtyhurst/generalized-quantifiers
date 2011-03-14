@@ -79,6 +79,12 @@
   (is ((m "Ginger") (((m "some") (m "student")) (m "bite"))))
   ;; Some dog bit some student. (subject wide)
   (is (((m "some") (m "dog")) (((m "some") (m "student")) (m "bite"))))
+  ;; Every student read some book. (subject wide)
+  (is (((m "every") (m "student")) (((m "some") (m "book")) (m "read"))))
+  ;; No dog bit any women.
+  (is (((m "no") (m "dog")) (((m "any") (m "woman")) (m "bite"))))
+  ;; No dog read a book.
+  (is (((m "no") (m "dog")) (((m "a") (m "read")) (m "read"))))
   ;; Every dog bit some student. (subject wide)
   (is (false? (((m "every") (m "dog")) (((m "some") (m "student")) (m "bite")))))
   ;; Ginger bit every student.
