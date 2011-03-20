@@ -18,8 +18,9 @@
     ;; books
     :joy-of-clojure :practical-clojure :stumbling-on-happiness})
 
-(defn m-gq [quantifier-predicate]
+(defn m-gq
   "Returns a function as the interpretation of a generalized quantifier."
+  [quantifier-predicate]
   (fn [quantified-property]
     (fn [argument]
       (cond (set? argument) ;; arg is Verb Phrase denotation
@@ -38,8 +39,9 @@
              (set '()) ;; reduced-set accumulator
              argument)))))
 
-(defn m-individual [entity]
+(defn m-individual
   "Maps element of the universe of discourse to a generalized quantifier."
+  [entity]
   (fn [argument]
     (let [quantifier-predicate (fn [q] (subset? #{entity} q))]
       (cond (set? argument) ;; arg is Verb Phrase denotation
@@ -54,8 +56,9 @@
              (set '()) ;; reduced-set accumulator
              argument)))))
 
-(defn m-adjective [p]
+(defn m-adjective
   "Maps a subset of the universe of discourse to a function that maps a subset to a subset, because functionally an adjective maps a noun to a noun."
+  [p]
   (fn [q] (intersection p q)))
 
 ;; Lexical item is the key. Denotation is the value.
