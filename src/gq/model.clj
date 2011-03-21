@@ -103,7 +103,7 @@
    ;; Quantifier (simple)
    "a" (m-gq (fn [p q] (not (empty? (intersection p q))))) ;; "some"
    "every" (m-gq (fn [p q] (subset? p q)))
-   "most" (m-gq (fn [p q] (> (count (intersection p q)) (count (difference q p)))))
+   "most" (m-gq (fn [p q] (> (count (intersection p q)) (count (difference p q)))))
    "no" (m-gq (fn [p q] (empty? (intersection p q))))
    "some" (m-gq (fn [p q] (not (empty? (intersection p q)))))
    ;; Quantifier (negative polarity)

@@ -1,6 +1,6 @@
-# gq
+# generalized-quantifiers
 
-Clojure implementation of Generalized Quantifiers for English as a simple demonstration of functions that construct functions. I am just using this as an exercise while learning Clojure.
+Clojure implementation of Generalized Quantifiers for English as a simple demonstration of functions that construct functions. I did this as an exercise while learning Clojure.
 
 This is a compositional model theory semantics where the denotation of a quantifier is a function that maps the denotation of a noun to a function that maps the denotation of a verb phrase to a truth value. Object noun phrases are functions that map a transitive verb to a verb phrase. Adjectives are functions that map nouns to nouns.
 
