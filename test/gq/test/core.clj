@@ -1,5 +1,6 @@
 (ns gq.test.core
-  (:use [gq.core] :reload)
+  (:use [gq.core])
+  (:import [gq.core Node])
   (:use [clojure.test]))
 
 (deftest test-every
@@ -72,7 +73,11 @@
   (is (== (m 42) 42)))
 
 (deftest test-unknown-type
-  (is (= (m {:unknown-phrase-type nil}) "Unknown type")))
+  (is (try (m {:unknown-phrase-type nil})
+           (catch IllegalArgumentException ex
+             true)
+           (finally
+            false))))
 
 ;; Denotation of object NP applied to transitive verb
 ;; yields a property, which is a subset of universe of discourse.
@@ -123,3 +128,47 @@
       "Every male student laughed.")
   (is (false? ((m "Ginger") (((m "a") ((m "female") (m "student"))) (m "bite"))))
       "Ginger bit a female student."))
+
+(deftest test-subject-wide-reading
+  ;;FIXME: Implement tests for LF
+  (is (((m "some") (m "dog")) (m "bark"))
+      "Some dog barked.")
+  (is (m (Node. :s 0 nil (list
+                          (Node. :np 1 nil (list
+                                            (Node. :det 0 "some" nil)
+                                            (Node. :n 0 "dog" nil)))
+                          (Node. :s 0 nil (list
+                                           (Node. :np 1 nil nil)
+                                           (Node. :vp 0 nil (list
+                                                             (Node. :v 0 "bark" nil)))))))))
+  (is (((m "every") (m "student")) (((m "some") (m "book")) (m "read")))
+      "Every student read some book. (subject wide)")
+  (is (m (Node. :s 0 nil (list
+                          (Node. :np 1 nil (list
+                                            (Node. :det 0 "every" nil)
+                                            (Node. :n 0 "student" nil)))
+                          (Node. :s 0 nil (list
+                                           (Node. :np 2 nil (list
+                                                             (Node. :det 0 "some" nil)
+                                                             (Node. :n 0 "book" nil)))
+                                           (Node. :s 0 nil (list
+                                                            (Node. :np 1 nil nil)
+                                                            (Node. :vp 0 nil (list
+                                                                              (Node. :v 0 "read" nil)
+                                                                              (Node. :np 2 nil nil))))))))))
+      "Every student read some book. (subject wide)")
+  (is (not (m (Node. :s 0 nil (list
+                               (Node. :np 2 nil (list
+                                                 (Node. :det 0 "some" nil)
+                                                 (Node. :n 0 "book" nil)))
+                               (Node. :s 0 nil (list
+                                                (Node. :np 1 nil (list
+                                                                  (Node. :det 0 "every" nil)
+                                                                  (Node. :n 0 "student" nil)))
+                                                (Node. :s 0 nil (list
+                                                                 (Node. :np 1 nil nil)
+                                                                 (Node. :vp 0 nil (list
+                                                                                   (Node. :v 0 "read" nil)
+                                                                                   (Node. :np 2 nil nil)))))))))))
+      "Every student read some book. (object wide)" )
+  )
