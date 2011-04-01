@@ -58,6 +58,13 @@
   (is (((m "some") ((m "male") (m "student"))) ((((m "exactly") (m 3)) (m "book")) (m "read")))
       "Some male student read exactly 3 books."))
 
+;; FIXME: 'which' only works in subject position currently,
+;; due to the way it is defined as a GQ. The definition needs
+;; to be generalized for movement from the object position.
+(deftest test-which
+  (is (= (((m "which") (m "student")) (m "laugh")) #{:brad :yolanda}))
+  (is (= (((m "which") (m "man")) ((m "Veronica") (m "kiss"))) #{:alan :brad})))
+
 (deftest test-proper-noun
   (is ((m "Ginger") (m "bark"))
       "Ginger barked.")

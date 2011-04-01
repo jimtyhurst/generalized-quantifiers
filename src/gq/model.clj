@@ -115,6 +115,8 @@
    "exactly" (fn [n] (m-gq (fn [p q] (== (count (intersection p q)) n))))
    "less than" (fn [n] (m-gq (fn [p q] (< (count (intersection p q)) n))))
    "more than" (fn [n] (m-gq (fn [p q] (> (count (intersection p q)) n))))
+   ;; WH questions
+   "which" (m-gq (fn [p q] (intersection p q)))
    })
 
 (defn lexical-item?
