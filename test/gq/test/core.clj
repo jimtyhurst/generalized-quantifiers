@@ -129,8 +129,7 @@
   (is (false? ((m "Ginger") (((m "a") ((m "female") (m "student"))) (m "bite"))))
       "Ginger bit a female student."))
 
-(deftest test-subject-wide-reading
-  ;;FIXME: Implement tests for LF
+(deftest test-logical-form
   (is (((m "some") (m "dog")) (m "bark"))
       "Some dog barked.")
   (is (m (Node. :s 0 nil (list
