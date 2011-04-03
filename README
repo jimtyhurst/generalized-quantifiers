@@ -41,6 +41,12 @@ See test/gq/test/core.clj for the interpretation of some sample sentences and se
 ;; At least 2 men kissed Veronica.
 ((((m "at least") (m 2)) (m "man")) ((m "Veronica") (m "kiss"))))
 
+;; Who kissed Veronica?
+((m "who") ((m "Veronica") (m "kiss")))
+
+;; Which man kissed Veronica?
+(((m "which") (m "man")) ((m "Veronica") (m "kiss")))
+
 ## License
 
 Copyright (C) 2010 Jim Tyhurst
