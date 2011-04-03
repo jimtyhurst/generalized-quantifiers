@@ -116,7 +116,10 @@
    "less than" (fn [n] (m-gq (fn [p q] (< (count (intersection p q)) n))))
    "more than" (fn [n] (m-gq (fn [p q] (> (count (intersection p q)) n))))
    ;; WH questions
+   ;; FIXME: 'which' only works in subject position currently.
    "which" (m-gq (fn [p q] (intersection p q)))
+   ;; FIXME: 'who' only works in subject position currently.
+   "who" (fn [q] q)
    })
 
 (defn lexical-item?

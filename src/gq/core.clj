@@ -16,5 +16,5 @@
   [expression]
   (cond (lexical-item? expression) (m-lexical-item expression)
         (number? expression) expression
-        :else "Unknown type"))
+        :else (throw (IllegalArgumentException. (str "Unknown type: " (prn-str expression))))))
 

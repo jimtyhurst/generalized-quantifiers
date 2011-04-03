@@ -58,12 +58,17 @@
   (is (((m "some") ((m "male") (m "student"))) ((((m "exactly") (m 3)) (m "book")) (m "read")))
       "Some male student read exactly 3 books."))
 
-;; FIXME: 'which' only works in subject position currently,
-;; due to the way it is defined as a GQ. The definition needs
-;; to be generalized for movement from the object position.
 (deftest test-which
-  (is (= (((m "which") (m "student")) (m "laugh")) #{:brad :yolanda}))
-  (is (= (((m "which") (m "man")) ((m "Veronica") (m "kiss"))) #{:alan :brad})))
+  (is (= (((m "which") (m "student")) (m "laugh")) #{:brad :yolanda})
+      "Which student laughed?")
+  (is (= (((m "which") (m "man")) ((m "Veronica") (m "kiss"))) #{:alan :brad})
+      "Which man kissed Veronica?"))
+
+(deftest test-who
+  (is (= ((m "who") (m "laugh")) #{:brad :edward :veronica :yolanda})
+      "Who laughed?")
+  (is (= ((m "who") ((m "Veronica") (m "kiss"))) #{:alan :brad})
+      "Who kissed Veronica?"))
 
 (deftest test-proper-noun
   (is ((m "Ginger") (m "bark"))
@@ -79,7 +84,10 @@
   (is (== (m 42) 42)))
 
 (deftest test-unknown-type
-  (is (= (m {:unknown-phrase-type nil}) "Unknown type")))
+  (is (= (try (m {:unknown-phrase-type nil})
+              (catch IllegalArgumentException ex "expected exception")
+              (finally "exception *not* thrown"))
+         "expected exception")))
 
 ;; Denotation of object NP applied to transitive verb
 ;; yields a property, which is a subset of universe of discourse.
