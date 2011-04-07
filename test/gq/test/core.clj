@@ -127,6 +127,19 @@
   (is (false? ((m "Ginger") ((m "Zoe") (m "bite"))))
       "Ginger bit Zoe."))
 
+(deftest test-be
+  (is ((m "Alan") ((m "Alan") (m "be")))
+      "Alan is Alan.")
+  (is (false? ((m "Alan") ((m "Brad") (m "be"))))
+      "Alan is Brad.")
+  (is ((m "Alan") (((m "a") ((m "male") (m "student"))) (m "be")))
+      "Alan is a male student.")
+  (is (((m "every") ((m "male") (m "student"))) (((m "a") (m "student")) (m "be")))
+      "Every male student is a student.")
+  (is (false? (((m "every") (m "student")) (((m "a") ((m "male") (m "student"))) (m "be"))))
+      "Every male student is a student.")
+  )
+
 (deftest test-adjective
   (is ((m "Ginger") (((m "a") ((m "male") (m "student"))) (m "bite")))
       "Ginger bit a male student.")

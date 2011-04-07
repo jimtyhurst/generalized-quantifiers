@@ -14,7 +14,7 @@
   #{;; people
     :alan :brad :carl :david :edward :veronica :willa :xena :yolanda :zoe
     ;; dogs
-    :lucky :rocky :ginger :sasha
+    :lucky :ginger :rocky :sasha
     ;; books
     :joy-of-clojure :practical-clojure :stumbling-on-happiness})
 
@@ -97,6 +97,7 @@
    "laugh" #{:brad :edward :veronica :yolanda}
    "study" #{:alan :brad :david :xena :zoe}
    ;; Transitive Verb
+   "be" {:alan #{:alan}, :brad #{:brad}, :carl #{:carl}, :david #{:david}, :edward #{:edward}, :veronica #{:veronica}, :willa #{:willa}, :xena #{:xena}, :yolanda #{:yolanda}, :zoe #{:zoe}, :lucky #{:lucky}, :ginger #{:ginger}, :rocky #{:rocky}, :sasha #{:sasha}, :joy-of-clojure #{:joy-of-clojure}, :practical-clojure #{:practical-clojure}, :stumbling-on-happiness #{:stumbling-on-happiness}}
    "bite" {:ginger #{:alan :brad}}
    "kiss" {:alan #{:veronica :zoe}, :brad #{:veronica}, :veronica #{:alan :brad}, :zoe #{:rocky}}
    "read" {:alan #{:joy-of-clojure :practical-clojure :stumbling-on-happiness}, :brad #{:joy-of-clojure}, :veronica #{:stumbling-on-happiness}, :yolanda #{:practical-clojure}, :zoe #{:stumbling-on-happiness}}
