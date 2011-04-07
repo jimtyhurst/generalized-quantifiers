@@ -95,7 +95,9 @@
   (is (= (((m "some") (m "student")) (m "bite")) #{:ginger})
       "bit some student")
   (is (= ((m "Alan") (m "bite")) #{:ginger})
-      "bit Alan"))
+      "bit Alan")
+  (is (= (((m "a") (m "book")) (m "read")) #{:alan :brad :veronica :yolanda :zoe})
+      "read a book"))
 
 (deftest test-transitive-verb
   (is ((m "Ginger") ((m "Alan") (m "bite")))
@@ -137,8 +139,7 @@
   (is (((m "every") ((m "male") (m "student"))) (((m "a") (m "student")) (m "be")))
       "Every male student is a student.")
   (is (false? (((m "every") (m "student")) (((m "a") ((m "male") (m "student"))) (m "be"))))
-      "Every male student is a student.")
-  )
+      "Every student is a male student."))
 
 (deftest test-adjective
   (is ((m "Ginger") (((m "a") ((m "male") (m "student"))) (m "bite")))
