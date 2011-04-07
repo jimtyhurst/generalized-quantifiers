@@ -53,5 +53,5 @@
               (= :vp (get-category expression))
               (m (first (get-children expression))))
         :else
-        (throw (IllegalArgumentException. (str "Unknown expression type: '" (print-str expression) "'")))))
+        (throw (IllegalArgumentException. (str "Unknown type: " (prn-str expression))))))
 

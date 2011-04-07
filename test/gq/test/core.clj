@@ -59,6 +59,22 @@
   (is (((m "some") ((m "male") (m "student"))) ((((m "exactly") (m 3)) (m "book")) (m "read")))
       "Some male student read exactly 3 books."))
 
+(deftest test-which
+  (is (= (((m "which") (m "student")) (m "laugh")) #{:brad :yolanda})
+      "Which student laughed?")
+  (is (= (((m "which") (m "man")) ((m "Veronica") (m "kiss"))) #{:alan :brad})
+      "Which men kissed Veronica?")
+  (is (= (((m "which") ((m "male") (m "student"))) ((m "Veronica") (m "kiss"))) #{:alan :brad})
+      "Which male students kissed Veronica?"))
+
+(deftest test-who
+  (is (= ((m "who") (m "laugh")) #{:brad :edward :veronica :yolanda})
+      "Who laughed?")
+  (is (= ((m "who") ((m "Veronica") (m "kiss"))) #{:alan :brad})
+      "Who kissed Veronica?")
+  (is (= ((m "who") (((m "a") (m "book")) (m "read"))) #{:alan :brad :veronica :yolanda :zoe})
+      "Who read a book?"))
+
 (deftest test-proper-noun
   (is ((m "Ginger") (m "bark"))
       "Ginger barked.")
@@ -73,11 +89,10 @@
   (is (== (m 42) 42)))
 
 (deftest test-unknown-type
-  (is (try (m {:unknown-phrase-type nil})
-           (catch IllegalArgumentException ex
-             true)
-           (finally
-            false))))
+  (is (= (try (m {:unknown-phrase-type nil})
+              (catch IllegalArgumentException ex "expected exception")
+              (finally "exception *not* thrown"))
+         "expected exception")))
 
 ;; Denotation of object NP applied to transitive verb
 ;; yields a property, which is a subset of universe of discourse.
@@ -85,7 +100,9 @@
   (is (= (((m "some") (m "student")) (m "bite")) #{:ginger})
       "bit some student")
   (is (= ((m "Alan") (m "bite")) #{:ginger})
-      "bit Alan"))
+      "bit Alan")
+  (is (= (((m "a") (m "book")) (m "read")) #{:alan :brad :veronica :yolanda :zoe})
+      "read a book"))
 
 (deftest test-transitive-verb
   (is ((m "Ginger") ((m "Alan") (m "bite")))
@@ -116,6 +133,18 @@
       "Some dog bit Zoe.")
   (is (false? ((m "Ginger") ((m "Zoe") (m "bite"))))
       "Ginger bit Zoe."))
+
+(deftest test-be
+  (is ((m "Alan") ((m "Alan") (m "be")))
+      "Alan is Alan.")
+  (is (false? ((m "Alan") ((m "Brad") (m "be"))))
+      "Alan is Brad.")
+  (is ((m "Alan") (((m "a") ((m "male") (m "student"))) (m "be")))
+      "Alan is a male student.")
+  (is (((m "every") ((m "male") (m "student"))) (((m "a") (m "student")) (m "be")))
+      "Every male student is a student.")
+  (is (false? (((m "every") (m "student")) (((m "a") ((m "male") (m "student"))) (m "be"))))
+      "Every student is a male student."))
 
 (deftest test-adjective
   (is ((m "Ginger") (((m "a") ((m "male") (m "student"))) (m "bite")))
