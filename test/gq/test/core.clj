@@ -62,13 +62,17 @@
   (is (= (((m "which") (m "student")) (m "laugh")) #{:brad :yolanda})
       "Which student laughed?")
   (is (= (((m "which") (m "man")) ((m "Veronica") (m "kiss"))) #{:alan :brad})
-      "Which man kissed Veronica?"))
+      "Which men kissed Veronica?")
+  (is (= (((m "which") ((m "male") (m "student"))) ((m "Veronica") (m "kiss"))) #{:alan :brad})
+      "Which male students kissed Veronica?"))
 
 (deftest test-who
   (is (= ((m "who") (m "laugh")) #{:brad :edward :veronica :yolanda})
       "Who laughed?")
   (is (= ((m "who") ((m "Veronica") (m "kiss"))) #{:alan :brad})
-      "Who kissed Veronica?"))
+      "Who kissed Veronica?")
+  (is (= ((m "who") (((m "a") (m "book")) (m "read"))) #{:alan :brad :veronica :yolanda :zoe})
+      "Who read a book?"))
 
 (deftest test-proper-noun
   (is ((m "Ginger") (m "bark"))
