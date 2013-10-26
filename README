@@ -21,6 +21,7 @@ James J. Tyhurst. 1990. "Logical Forms for English Sentences". Ph.D. dissertatio
 Unfortunately, that source code is no longer available.
 
 ## Usage
+(use '[gq.core] :reload)
 
 (m logical-form) ;; applies the interpretation function m to derive the denotation of logical-form
 
@@ -39,7 +40,7 @@ See test/gq/test/core.clj for the interpretation of some sample sentences and se
 (((m "no") ((m "female") (m "dog"))) (((m "any") ((m "female") (m "student"))) (m "bite")))
 
 ;; At least 2 men kissed Veronica.
-((((m "at least") (m 2)) (m "man")) ((m "Veronica") (m "kiss"))))
+((((m "at least") (m 2)) (m "man")) ((m "Veronica") (m "kiss")))
 
 ;; Who kissed Veronica?
 ((m "who") ((m "Veronica") (m "kiss")))

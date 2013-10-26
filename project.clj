@@ -1,5 +1,6 @@
 (defproject gq "1.0.0-SNAPSHOT"
   :description "Interprets logical forms with generalized quantifiers for English."
-  :dependencies [[org.clojure/clojure "1.2.0"]
-                 [org.clojure/clojure-contrib "1.2.0"]]
-  :dev-dependencies [[swank-clojure "1.2.1"]])
+  :url "https://github.com/jimtyhurst/generalized-quantifiers"
+  :license {:name "Eclipse Public License"
+            :url "http://www.eclipse.org/legal/epl-v10.html"}
+  :dependencies [[org.clojure/clojure "1.5.1"]])
